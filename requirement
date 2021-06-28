@@ -1,0 +1,29 @@
+// requirement
+// publication
+
+// book
+// ISBN, title authon, language, pub date,  numb pages, categories[]
+
+// authors
+// name, id Books[]
+
+// publications
+// name, id, Books[]
+
+// data 
+
+// books - wenned an API
+// to get all books
+// to get specific books
+// to get a list of books based on categories
+// to get a list of books based on author
+
+// author
+// to get all author
+// to get specific author
+// to get a list of authors based on a book
+
+// publications
+// to get all publications
+// to get specific publications
+// to get a list of publications based on a book
