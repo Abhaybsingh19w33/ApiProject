@@ -1,3 +1,4 @@
+npx nodemon index to run server and watch over files
 // requirement
 // publication
 
@@ -12,7 +13,7 @@
 
 // data 
 
-// books - wenned an API
+// books 
 // to get all books
 // to get specific books
 // to get a list of books based on categories
@@ -27,3 +28,38 @@
 // to get all publications
 // to get specific publications
 // to get a list of publications based on a book
+
+POST
+upload new book
+
+PUT
+update book details
+update/add new author
+
+DELETE
+delete a book
+delete a author
+
+AUTHOR
+POST 
+new author
+
+PUT
+author details
+
+DELETE
+delete an author
+
+publication
+POST
+add new publications
+
+PUT
+update publications details
+update / add new book to the publications
+
+DELETE
+delete a book from a publication
+
+
+postman - http client(helper to pass data)

@@ -10,7 +10,7 @@ const books = [
         publication: 1,
     },
     {
-        ISBN: "12345Two",
+        ISBN: "12345TWO",
         title: "Getting started with Python",
         authors: [1, 2],
         language: "en",
@@ -25,7 +25,7 @@ const authors = [
     {
         id: 1,
         name: "pavan",
-        books: ["12345ONE", "12345Two"],
+        books: ["12345ONE", "12345TWO"],
     },
     {
         id: 2,
