@@ -150,5 +150,81 @@ shapeAI.post("/author/new", (req, res) => {
     return res.json({ books: database.authors, message: "author was added!" });
 });
 
+/*
+Route               /book/update/
+Description         update title of a book
+Access              public
+Parameters          isbn
+method              PUT
+*/
+shapeAI.put("/book/update/:isbn", (req, res) => {
+    // foreach directly modifies the array
+    database.books.forEach((book) => {
+        if (book.ISBN === req.params.isbn) {
+            book.title = req.body.bookTitle;
+            return;
+        }
+    });
+    // map => new array => replace
+    return res.json({ books: database.books });
+});
+
+/*
+Route               /book/update/author/:isbn
+Description         update/add new author
+Access              public
+Parameters          isbn
+method              PUT
+*/
+shapeAI.put("/book/author/update/:isbn", (req, res) => {
+    // update the book database
+    database.books.forEach((book) => {
+        if (book.ISBN === req.params.isbn)
+            return book.authors.push(req.body.newAuthor);
+    });
+
+    // update the author database
+    database.authors.forEach((author) => {
+        if (author.id === req.body.newAuthor)
+            return author.books.push(req.params.isbn);
+    });
+
+    return res.json({
+        books: database.books,
+        authors: database.authors,
+        message: "New author was added",
+    });
+});
+
+/*
+Route               /publication/update/book
+Description         update/add new book to a publication
+Access              public
+Parameters          isbn
+method              PUT
+*/
+shapeAI.put("/publication/update/book/:isbn", (req, res) => {
+    // update the publication database
+    database.publications.forEach((publication) => {
+        if (publication.id === req.body.pubId) {
+            return publication.books.push(req.params.isbn);
+        }
+    });
+
+    // update the book database
+    database.books.forEach((book) => {
+        if (book.ISBN === req.params.isbn) {
+            book.publication = req.body.pubId;
+            return;
+        }
+    });
+
+    return res.json({
+        books: database.books,
+        authors: database.authors,
+        message: "Successfully added publication"
+    });
+});
+
 // starting the server
 shapeAI.listen(3000, () => console.log("server is running!"));
