@@ -1,10 +1,23 @@
+require("dotenv").config();
 // framework
 const express = require("express");
 // database
 const database = require("./database/index");
 const shapeAI = express();
+const mongoose = require('mongoose');
 
 shapeAI.use(express.json());
+
+// establishing the mdb connection
+mongoose.connect(
+    process.env.MONGO_URL,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useFindAndModify: false,
+        useCreateIndex: true
+    }
+).then(() => console.log("connection established"));
 
 /*
 Route               /
@@ -319,7 +332,7 @@ Description     delete a book from publication
 Access          PUBLIC
 Parameters      isbn, publication id
 Method          DELETE
-*/ 
+*/
 shapeAI.delete("/publication/delete/book/:isbn/:pubId", (req, res) => {
     // update publication database
     database.publications.forEach((publication) => {
@@ -350,3 +363,9 @@ shapeAI.delete("/publication/delete/book/:isbn/:pubId", (req, res) => {
 
 // starting the server
 shapeAI.listen(3000, () => console.log("server is running!"));
+
+//  mongoose helps you with validation, relationship with other data
+// mongoose model -> document model of mongoDb 
+// collection -> individual databases
+// architecture 
+// schema -> convert them to mongoose Model -> use them
