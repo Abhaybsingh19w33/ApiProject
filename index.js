@@ -6,6 +6,11 @@ const database = require("./database/index");
 const shapeAI = express();
 const mongoose = require('mongoose');
 
+// models
+const BookModels = require("./database/book");
+const AuthorModel = require("./database/author");
+const PublicationModel = require("./database/publication");
+
 shapeAI.use(express.json());
 
 // establishing the mdb connection
