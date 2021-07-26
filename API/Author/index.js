@@ -30,20 +30,24 @@ Router.get("/:Id", (req, res) => {
     return res.json({ books: getSpecificAuthor });
 });
 /*
-Route               /author/book
+Route               /author
 Description         get a list of authors based on a book's isbn
 Access              public
 Parameters          ISBN
 method              GET
 */
-Router.get("/book/:isbn", (req, res) => {
-    const getSpecificAuthors = database.authors.filter((author) => author.books.includes(req.params.isbn));
+Router.get("/:isbn", async (req, res) => {
+    try {
+        const getSpecificAuthors = database.authors.filter((author) => author.books.includes(req.params.isbn));
 
-    if (getSpecificAuthors.length === 0) {
-        return res.json({ error: `No author found for the book ${req.params.isbn}` })
+        if (getSpecificAuthors.length === 0) {
+            return res.json({ error: `No author found for the book ${req.params.isbn}` })
+        }
+
+        return res.json({ authors: getSpecificAuthors });
+    } catch (error) {
+        return res.json({ error: error.message })
     }
-
-    return res.json({ authors: getSpecificAuthors });
 });
 
 /*
