@@ -63,3 +63,22 @@ delete a book from a publication
 
 
 postman - http client(helper to pass data)
+
+mongoDb Operators
+powerfull yet devs won't use them
+
+map and filters
+
+$inc -> increment
+$min -> minimum
+$max -> maximum
+$set ->  sets as database$unset -> removes sa propperty from an object
+$unset -> remove sthe propperty from an object
+
+Arrays 
+$push -> to enter the data
+$pull -> to retreive the data
+$pop -> to remove from the data
+$addToSet -> no duplicate allowed
+
+Monolithic Architecture
