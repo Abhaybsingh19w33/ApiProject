@@ -70,7 +70,7 @@ Access          PUBLIC
 Parameters      authorId
 Method          DELETE
 */
-shapeAI.delete("/delete/:authorId", (req, res) => {
+Router.delete("/delete/:authorId", (req, res) => {
     const updatedAuthorDatabase = database.authors.filter(
         (author) => author.id !== parseInt(req.params.authorId)
     );
