@@ -29,6 +29,21 @@ Router.get("/:Id", (req, res) => {
 });
 
 /*
+Route               books/
+Description         get a list of publications based on a book
+Access              public
+Parameters          isbn
+method              GET
+*/
+Router.get("/books/:isbn", async (req, res) => {
+    const getBooks = await PublicationModel.find({ books: req.params.isbn });
+    if (!getBooks) {
+        return res.json({ error: `No book found for the isbn number ${req.params.isbn}` })
+    }
+    return res.json({ books: getBooks });
+});
+
+/*
 Route               /publication/new
 Description         add new publication
 Access              public
@@ -39,6 +54,31 @@ Router.post("/new", (req, res) => {
     const { newPublication } = req.body;
     PublicationModel.create(newPublication);
     return res.json({ message: "publication was added!" });
+});
+
+/*
+Route               /publication/update/name/
+Description         update name
+Access              public
+Parameters          id
+method              PUT
+*/
+Router.put("/update/name/:id", async (req, res) => {
+    // update the book database
+    const updatedPublication = await PublicationModel.findOneAndUpdate(
+        { id: req.params.id },
+        {
+            $set: {
+                name: req.body.name,
+            },
+        },
+        { new: true }
+    );
+
+    return res.json({
+        books: updatedPublication,
+        message: "Publication name updated",
+    });
 });
 
 /*
