@@ -2,6 +2,7 @@
 // initializing exprese router
 const Router = require("express").Router();
 const BookModel = require("../../database/book");
+const AuthorModel = require("../../database/author");
 
 // pefix : /book
 /*
@@ -44,6 +45,36 @@ Router.get("/c/:category", async (req, res) => {
         return res.json({ error: `No book found for the category name of ${req.params.category}` })
     }
     return res.json({ books: getSpecificBooks });
+});
+
+/*
+Route               manyc/
+Description         get a list of books based on category
+Access              public
+Parameters          category
+method              GET
+*/
+Router.get("/manyc/:category", async (req, res) => {
+    const getSpecificBooks = await BookModel.find({ category: req.params.category });
+    if (!getSpecificBooks) {
+        return res.json({ error: `No book found for the category name of ${req.params.category}` })
+    }
+    return res.json({ books: getSpecificBooks });
+});
+
+/*
+Route               manya/
+Description         get a list of books based on author
+Access              public
+Parameters          category
+method              GET
+*/
+Router.get("/manya/:author", async (req, res) => {
+    const getSpecificAuthors = await BookModel.find({ authors: req.params.author });
+    if (!getSpecificAuthors) {
+        return res.json({ error: `No book found for the author name of ${req.params.author}` })
+    }
+    return res.json({ books: getSpecificAuthors });
 });
 
 // POST
@@ -91,7 +122,7 @@ Access              public
 Parameters          isbn
 method              PUT
 */
-Router.put("/author/update/:isbn", async (req, res) => {
+Router.put("/update/author/:isbn", async (req, res) => {
     // update the book database
     const updatedBook = await BookModel.findOneAndUpdate(
         { ISBN: req.params.isbn },
@@ -117,6 +148,81 @@ Router.put("/author/update/:isbn", async (req, res) => {
         books: updatedBook,
         authors: updatedAuthor,
         message: "New author was added",
+    });
+});
+
+/*
+Route               /book/update/language/:isbn
+Description         update language
+Access              public
+Parameters          isbn
+method              PUT
+*/
+Router.put("/update/language/:isbn", async (req, res) => {
+    // update the book database
+    const updatedBook = await BookModel.findOneAndUpdate(
+        { ISBN: req.params.isbn },
+        {
+            $set: {
+                language: req.body.language,
+            },
+        },
+        { new: true }
+    );
+
+    return res.json({
+        books: updatedBook,
+        message: "Book language updated",
+    });
+});
+
+/*
+Route               /book/update/pubDate/:isbn
+Description         update pubDate
+Access              public
+Parameters          isbn
+method              PUT
+*/
+Router.put("/update/pubDate/:isbn", async (req, res) => {
+    // update the book database
+    const updatedBook = await BookModel.findOneAndUpdate(
+        { ISBN: req.params.isbn },
+        {
+            $set: {
+                pubDate: req.body.pubDate,
+            },
+        },
+        { new: true }
+    );
+
+    return res.json({
+        books: updatedBook,
+        message: "Book publish Date updated",
+    });
+});
+
+/*
+Route               /book/update/numOfPage/:isbn
+Description         update numOfPage
+Access              public
+Parameters          isbn
+method              PUT
+*/
+Router.put("/update/numOfPage/:isbn", async (req, res) => {
+    // update the book database
+    const updatedBook = await BookModel.findOneAndUpdate(
+        { ISBN: req.params.isbn },
+        {
+            $set: {
+                numOfPage: req.body.numOfPage,
+            },
+        },
+        { new: true }
+    );
+
+    return res.json({
+        books: updatedBook,
+        message: "Book number of pages updated",
     });
 });
 
