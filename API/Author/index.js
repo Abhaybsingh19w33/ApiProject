@@ -64,19 +64,45 @@ Router.post("/new", (req, res) => {
 });
 
 /*
-Route           /author/delete
-Description     delete a author
-Access          PUBLIC
-Parameters      authorId
-Method          DELETE
+Route               /author/update/
+Description         update name
+Access              public
+Parameters          id
+method              PUT
 */
-Router.delete("/delete/:authorId", (req, res) => {
-    const updatedAuthorDatabase = database.authors.filter(
-        (author) => author.id !== parseInt(req.params.authorId)
+Router.put("/update/:id", async (req, res) => {
+    // update the Author database
+    const updatedAuthor = await AuthorModel.findOneAndUpdate(
+        { id: req.params.id },
+        {
+            $set: {
+                name: req.body.name,
+            },
+        },
+        { new: true }
     );
+    return res.json({
+        author: updatedAuthor,
+        message: "Author name updated",
+    });
+});
 
-    database.authors = updatedAuthorDatabase;
-    return res.json({ authors: database.authors });
+/*
+Route               /author/delete/
+Description         delete author
+Access              public
+Parameters          authorId
+method              DELETE
+*/
+Router.delete("/delete/:authorId", async (req, res) => {
+    // update the Author database
+    const updatedAuthorDatabase = await AuthorModel.findOneAndDelete(
+        { id: req.params.authorId }
+    );
+    return res.json({
+        authors: updatedAuthorDatabase,
+        message: "Author deleted"
+    });
 });
 
 module.exports = Router;
